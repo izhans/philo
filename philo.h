@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 07:42:17 by isastre-          #+#    #+#             */
-/*   Updated: 2025/10/29 11:22:25 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/10/30 14:00:53 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,22 @@
  */
 # include <stdbool.h> // booleans
 
+// ##### DEFINES #####
+
+// variables
+# define MIN_INPUT_VALUE 1
+# define MAX_INPUT_VALUE INT32_MAX
+
+// printf
+# define RESET "\033[0m"
+# define RED "\033[1;31m"
+
+// error msgs
+# define INPUT_SIGNATURE "./philo number_of_philosophers time_to_die \
+time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
+# define INPUT_CONTAINS_INVALID_VALUES "Input must contain positive numeric values \
+between 1 and 2147483647 (both included)"
+
 // ##### STRUCTS #####
 
 typedef pthread_mutex_t		t_lock;
@@ -38,7 +54,7 @@ typedef struct s_philo		t_philo;
 struct s_monitor
 {
 	// input data
-	int		n_philo;
+	int		n_philos;
 	int		time_to_die;
 	int		time_to_eat;
 	int		time_to_sleep;
@@ -50,6 +66,7 @@ struct s_monitor
 	int		start_time;
 	bool	end; // true if philo dies or meals_limit is reached
 };
+
 struct s_fork
 {
 	int		id;
@@ -67,5 +84,13 @@ struct s_philo
 	bool		full; // meals_eaten == meals_limit
 	t_monitor	*monitor;
 };
+
+// ##### FUNCTIONS #####
+
+//parse
+void	ft_parse_input(t_monitor *monitor, int argc, char *argv[]);
+
+// utils
+void	ft_exit(char *msg);
 
 #endif
