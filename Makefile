@@ -3,8 +3,12 @@ NAME =	philo
 CC =	cc
 FLAGS =	-Wall -Werror -Wextra
 
-SRC =	philo.c \
+SRC =	\
+		getters_setters.c \
+		init.c \
+		locks.c \
 		parse.c \
+		philo.c \
 		utils.c \
 
 OBJ =	$(SRC:.c=.o)
