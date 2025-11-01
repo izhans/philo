@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 19:50:04 by isastre-          #+#    #+#             */
-/*   Updated: 2025/10/31 20:54:32 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/01 12:05:57 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	main(int argc, char *argv[])
 	ft_init_structs(&monitor);
 	
 	// 3. philos do things
+	if (monitor.n_philos == 1)
+		return (ft_one_philo_dinner(&monitor), 0);
 	ft_create_threads(&monitor);
 	
 	// 4. end -> clean + exit

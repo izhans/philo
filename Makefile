@@ -4,6 +4,7 @@ CC =	cc
 FLAGS =	-Wall -Werror -Wextra
 
 SRC =	\
+		dinner.c \
 		getters_setters.c \
 		init.c \
 		locks.c \

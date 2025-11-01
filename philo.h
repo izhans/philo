@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 07:42:17 by isastre-          #+#    #+#             */
-/*   Updated: 2025/10/31 20:56:11 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/01 12:00:42 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@
 // printf
 # define RESET "\033[0m"
 # define RED "\033[1;31m"
+
+// actions
+# define TAKE_FORK "has taken a fork"
+# define EAT "is eating"
+# define SLEEP "is sleeping"
+# define THINK "is thinking"
+# define DIE "died"
 
 // error msgs
 # define INPUT_SIGNATURE "./philo number_of_philosophers time_to_die \
@@ -82,6 +89,7 @@ struct s_fork
 struct s_locks
 {
 	t_lock	ready;
+	t_lock	print;
 };
 
 struct s_philo
@@ -108,10 +116,15 @@ void	ft_init_structs(t_monitor *monitor);
 void	ft_create_locks(t_monitor *monitor);
 void	ft_destroy_locks(t_monitor *monitor);
 
+//dinner
+void	ft_one_philo_dinner(t_monitor *monitor);
+
 // utils
 void	ft_exit(char *msg);
 void	*ft_malloc(size_t size);
 void	ft_free_monitor(t_monitor *monitor);
+void	ft_print(t_philo *philo, char *action);
+void	ft_sleep(int ms);
 
 // getters & setters
 bool	ft_getbool(bool var, t_lock *lock);
