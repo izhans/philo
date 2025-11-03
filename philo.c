@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 19:50:04 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/01 12:05:57 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/01 13:48:28 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ void	*routine(void *data)
 	monitor = philo->monitor;
 	ft_wait(monitor);
 	// TODO philos algorithm
+	ft_print(philo, THINK);
+	if (philo->id % 2 == 1) // delay para los pares (id impreso)
+		ft_usleep(monitor->time_to_eat / 2);
+	ft_dinner(monitor, philo);
 	return (NULL);
 }
 

@@ -10,6 +10,7 @@ SRC =	\
 		locks.c \
 		parse.c \
 		philo.c \
+		time_utils.c \
 		utils.c \
 
 OBJ =	$(SRC:.c=.o)

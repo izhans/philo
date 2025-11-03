@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 12:00:05 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/01 11:56:01 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/01 13:45:27 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,11 @@ void	ft_free_monitor(t_monitor *monitor)
 void	ft_print(t_philo *philo, char *action)
 {
 	t_lock *lock;
+	unsigned int	timestamp;
 	
 	lock = &(philo->monitor->locks->print);
+	timestamp = ft_get_timestamp(philo->monitor);
 	pthread_mutex_lock(lock);
-	printf("%d %s\n", philo->id, action); // TODO añadir timestamp
+	printf("%u %d %s\n", timestamp, philo->id +1, action);
 	pthread_mutex_unlock(lock);
-}
-
-void	ft_sleep(int ms)
-{
-	usleep(ms * 1000);
 }

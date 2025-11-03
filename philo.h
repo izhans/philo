@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 07:42:17 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/01 12:00:42 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/01 13:46:10 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ struct s_locks
 {
 	t_lock	ready;
 	t_lock	print;
+	t_lock	end;
 };
 
 struct s_philo
@@ -118,13 +119,18 @@ void	ft_destroy_locks(t_monitor *monitor);
 
 //dinner
 void	ft_one_philo_dinner(t_monitor *monitor);
+void	ft_dinner(t_monitor *monitor, t_philo *philo);
 
 // utils
 void	ft_exit(char *msg);
 void	*ft_malloc(size_t size);
 void	ft_free_monitor(t_monitor *monitor);
 void	ft_print(t_philo *philo, char *action);
-void	ft_sleep(int ms);
+
+// time utils
+void	ft_usleep(int miliseconds);
+int		ft_getms();
+int		ft_get_timestamp(t_monitor *monitor);
 
 // getters & setters
 bool	ft_getbool(bool var, t_lock *lock);
