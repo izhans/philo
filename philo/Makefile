@@ -4,7 +4,9 @@ CC =	cc
 FLAGS =	-Wall -Werror -Wextra
 
 SRC =	\
+		parse.c \
 		philo.c \
+		utils.c \
 
 OBJ =	$(SRC:.c=.o)
 

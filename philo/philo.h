@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:36:18 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/05 11:49:40 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:14:51 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,25 @@
  * pthread_mutex_: init destroy lock unlock
  */
 # include <stdbool.h> // booleans
+# include <limits.h> // INT_MAX
 
 // ##### DEFINES #####
+
+// variables
+# define MIN_INPUT_VALUE 1
+# define MAX_INPUT_VALUE INT_MAX
+# define MIN_MS 60
+# define MAX_PHILOS 200
 
 // printf
 # define RESET "\033[0m"
 # define RED "\033[1;31m"
+
+// error msgs
+# define INPUT_SIGNATURE "./philo number_of_philosophers time_to_die \
+time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
+# define INPUT_CONTAINS_INVALID_VALUES "Input must contain positive numeric (int)\
+values with no more than 200 philos and no lower times than 60ms"
 
 // ##### STRUCTS #####
 
@@ -85,5 +98,11 @@ struct s_philo
 };
 
 // ##### FUNCTIONS #####
+
+// parse
+void	ft_parse_input(t_monitor *monitor, int argc, char *argv[]);
+
+// utils
+void	ft_exit(char *msg);
 
 #endif
