@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:49:57 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/06 15:52:46 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/06 18:31:33 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_create_threads(t_monitor *monitor)
 	}
 	// create monitor thread
 	if (pthread_create(&monitor->thread, NULL,
-			monitor_routine, &monitor->philos[i]) != EXIT_SUCCESS)
+			monitor_routine, monitor) != EXIT_SUCCESS)
 		ft_exit(monitor, THREAD_INIT_ERROR, true);
 	// set start time
 	monitor->start_time = ft_getms();
@@ -90,25 +90,38 @@ void	*routine(void *data)
 
 	philo = data;
 	monitor = philo->monitor;
-	// TODO
 	// while !ready -> wait
 	while (!ft_getbool(&monitor->ready, &monitor->ready_lock))
-		usleep(ACTIVE_WAIT);
+		usleep(CHECK_READY_ACTIVE_WAIT);
 	// set last_meal to now
 	ft_setlong(&philo->last_meal, ft_getms(), &philo->meals_lock);
 	// think
+	ft_print(philo, PHILO_THINK);
 	// while !end -> eat -> sleep -> think -> repeat
+	while (!ft_getbool(&monitor->end, &monitor->end_lock))
+	{
+		// TODO eat -> sleep -> think -> repeat
+	}
 	return (NULL);
 }
 
+/**
+ * @brief check if philos are full or dead and sets flag end to true
+ */
 void	*monitor_routine(void *data)
 {
 	t_monitor	*monitor;
 
 	monitor = data;
-	(void) monitor;
-	// TODO
-	// check if meals_limit has been reached on all philos
-	// check no philo is dead (if now - last_meal >= time_to_die, is dead)
+	while (!ft_getbool(&monitor->ready, &monitor->ready_lock))
+		usleep(CHECK_READY_ACTIVE_WAIT);
+	usleep(MONITOR_THREAD_DELAY);
+	while (true)
+	{
+		if (ft_meals_limit_reached(monitor) || ft_a_philo_died(monitor))
+			break ;
+		usleep(CHECK_END_ACTIVE_WAIT);
+	}
+	ft_setbool(&monitor->end, true, &monitor->end_lock);
 	return (NULL);
 }

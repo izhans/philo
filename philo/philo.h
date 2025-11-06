@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:36:18 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/06 14:02:37 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/06 18:31:55 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@
 # define MAX_PHILOS 200
 # define TIME_STEP 1000
 # define SLEEP_STEP 500
+# define CHECK_READY_ACTIVE_WAIT 100
+# define CHECK_END_ACTIVE_WAIT 1000
+# define MONITOR_THREAD_DELAY 500
 
 // printf
 # define RESET "\033[0m"
@@ -122,11 +125,16 @@ struct s_philo
 void	ft_parse_input(t_monitor *monitor, int argc, char *argv[]);
 void	ft_init_structs(t_monitor *monitor);
 
+// dinner utils
+bool	ft_meals_limit_reached(t_monitor *monitor);
+bool	ft_a_philo_died(t_monitor *monitor);
+
 // utils
 void	ft_exit(t_monitor *monitor, char *msg, bool destroy_locks);
 void	ft_free_monitor(t_monitor *monitor);
 void	ft_destroy_locks(t_monitor *monitor);
 void	ft_join_threads(t_monitor *monitor);
+void	ft_print(t_philo *philo, char *action);
 
 // time utils
 void	ft_usleep(int miliseconds);
