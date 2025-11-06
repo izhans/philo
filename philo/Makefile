@@ -1,19 +1,21 @@
 #### Variables ####
 NAME =	philo
 CC =	cc
-FLAGS =	-Wall -Werror -Wextra
+FLAGS =	-Wall -Werror -Wextra -pthread -g3
 
 SRC =	\
+		getters_setters.c \
 		init.c \
 		parse.c \
 		philo.c \
+		time_utils.c \
 		utils.c \
 
 OBJ =	$(SRC:.c=.o)
 
 #### Rules ####
 # Declares rules
-.PHONY: all clean fclean re debug
+.PHONY: all clean fclean re
 
 all: $(NAME)
 
@@ -30,6 +32,3 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-
-debug: FLAGS += -g3
-debug: all

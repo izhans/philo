@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:49:57 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/06 13:36:52 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/06 15:52:46 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,22 @@ int	main(int argc, char *argv[])
 	return (0);
 }
 
+/**
+ * @brief prints take fork, waits time_to_die and prints death
+ */
 void	ft_one_philo_dinner(t_monitor *monitor)
 {
 	int	philo_id;
 
 	philo_id = 1;
 	printf("%d %d %s\n", 0, philo_id, PHILO_TAKE_FORK);
-	// sleep monitor->time_to_die // TODO
+	ft_usleep(monitor->time_to_die);
 	printf("%d %d %s\n", monitor->time_to_die, philo_id, PHILO_DIE);
 }
 
+/**
+ * @brief creates philos and monitor threads, starts dinner and waits till end
+ */
 void	ft_create_threads(t_monitor *monitor)
 {
 	int	i;
@@ -63,16 +69,14 @@ void	ft_create_threads(t_monitor *monitor)
 		monitor->created_threads++;
 		i++;
 	}
-	// set start time
-	// monitor->start_time = now; // TODO
 	// create monitor thread
 	if (pthread_create(&monitor->thread, NULL,
 			monitor_routine, &monitor->philos[i]) != EXIT_SUCCESS)
 		ft_exit(monitor, THREAD_INIT_ERROR, true);
+	// set start time
+	monitor->start_time = ft_getms();
 	// set ready flag to true
-	pthread_mutex_lock(&monitor->ready_lock);
-	monitor->ready = true;
-	pthread_mutex_unlock(&monitor->ready_lock);
+	ft_setbool(&monitor->ready, true, &monitor->ready_lock);
 	// join threads
 	// ? primero monitor o philos
 	ft_join_threads(monitor);
@@ -81,13 +85,17 @@ void	ft_create_threads(t_monitor *monitor)
 
 void	*routine(void *data)
 {
-	t_philo	*philo;
+	t_philo		*philo;
+	t_monitor	*monitor;
 
 	philo = data;
-	(void) philo;
+	monitor = philo->monitor;
 	// TODO
 	// while !ready -> wait
+	while (!ft_getbool(&monitor->ready, &monitor->ready_lock))
+		usleep(ACTIVE_WAIT);
 	// set last_meal to now
+	ft_setlong(&philo->last_meal, ft_getms(), &philo->meals_lock);
 	// think
 	// while !end -> eat -> sleep -> think -> repeat
 	return (NULL);

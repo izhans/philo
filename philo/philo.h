@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:36:18 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/06 09:52:07 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/06 14:02:37 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define MIN_MS 60
 # define MAX_PHILOS 200
 # define TIME_STEP 1000
+# define SLEEP_STEP 500
 
 // printf
 # define RESET "\033[0m"
@@ -57,6 +58,7 @@ values with no more than 200 philos and no lower times than 60ms"
 # define MALLOC_ERROR "An error ocurred while allocating memory"
 # define MUTEX_INIT_ERROR "Error while initiating mutex"
 # define THREAD_INIT_ERROR "Error while creating thread"
+# define GETTIME_ERROR "Error while getting time of day"
 
 // ##### STRUCTS #####
 
@@ -125,5 +127,16 @@ void	ft_exit(t_monitor *monitor, char *msg, bool destroy_locks);
 void	ft_free_monitor(t_monitor *monitor);
 void	ft_destroy_locks(t_monitor *monitor);
 void	ft_join_threads(t_monitor *monitor);
+
+// time utils
+void	ft_usleep(int miliseconds);
+long	ft_elapsed_ms(long start);
+long	ft_getms(void);
+
+// getters & setters
+bool	ft_getbool(bool *var, t_lock *lock);
+void	ft_setbool(bool *var, bool value, t_lock *lock);
+long	ft_getlong(long *var, t_lock *lock);
+void	ft_setlong(long *var, long value, t_lock *lock);
 
 #endif
