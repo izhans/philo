@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 16:21:29 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/06 09:02:18 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/06 09:20:23 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ static bool		ft_isdigit(int c);
  */
 void	ft_parse_input(t_monitor *monitor, int argc, char *argv[])
 {
-	monitor->n_philos = 0;
-	monitor->created_forks = 0;
-	monitor->created_philos = 0;
 	if (argc != 5 && argc != 6)
 		ft_exit(NULL, INPUT_SIGNATURE, false);
 	monitor->n_philos = ft_atoi(argv[1], MIN_INPUT_VALUE, MAX_PHILOS);
@@ -44,7 +41,7 @@ static int	ft_atoi(char *str, int min, int max)
 	long	n;
 
 	n = 0;
-	if (ft_strlen(str) > 10 || *str == '-')
+	if (ft_strlen(str) > 11 || *str == '-')
 		ft_exit(NULL, INPUT_CONTAINS_INVALID_VALUES, false);
 	if (*str == '+')
 		str++;
