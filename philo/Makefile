@@ -4,6 +4,7 @@ CC =	cc
 FLAGS =	-Wall -Werror -Wextra
 
 SRC =	\
+		init.c \
 		parse.c \
 		philo.c \
 		utils.c \

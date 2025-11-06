@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 16:21:29 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/05 12:12:08 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/06 09:02:18 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ static bool		ft_isdigit(int c);
  */
 void	ft_parse_input(t_monitor *monitor, int argc, char *argv[])
 {
+	monitor->n_philos = 0;
+	monitor->created_forks = 0;
+	monitor->created_philos = 0;
 	if (argc != 5 && argc != 6)
-		ft_exit(INPUT_SIGNATURE);
+		ft_exit(NULL, INPUT_SIGNATURE, false);
 	monitor->n_philos = ft_atoi(argv[1], MIN_INPUT_VALUE, MAX_PHILOS);
 	monitor->time_to_die = ft_atoi(argv[2], MIN_MS, MAX_INPUT_VALUE);
 	monitor->time_to_eat = ft_atoi(argv[3], MIN_MS, MAX_INPUT_VALUE);
@@ -42,7 +45,7 @@ static int	ft_atoi(char *str, int min, int max)
 
 	n = 0;
 	if (ft_strlen(str) > 10 || *str == '-')
-		ft_exit(INPUT_CONTAINS_INVALID_VALUES);
+		ft_exit(NULL, INPUT_CONTAINS_INVALID_VALUES, false);
 	if (*str == '+')
 		str++;
 	while (ft_isdigit(*str))
@@ -51,7 +54,7 @@ static int	ft_atoi(char *str, int min, int max)
 		str++;
 	}
 	if (n > max || n < min)
-		ft_exit(INPUT_CONTAINS_INVALID_VALUES);
+		ft_exit(NULL, INPUT_CONTAINS_INVALID_VALUES, false);
 	return (n);
 }
 

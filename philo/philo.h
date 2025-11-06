@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:36:18 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/05 12:14:51 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/06 09:02:07 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@
 time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
 # define INPUT_CONTAINS_INVALID_VALUES "Input must contain positive numeric (int)\
 values with no more than 200 philos and no lower times than 60ms"
+# define MALLOC_ERROR "An error ocurred while allocating memory"
+# define MUTEX_INIT_ERROR "Error while initiating mutex"
 
 // ##### STRUCTS #####
 
@@ -73,6 +75,9 @@ struct s_monitor
 	bool	ready;
 	long	start_time;
 	bool	end; // true if philo dies or meals_limit is reached
+	// created data
+	int		created_forks;
+	int		created_philos;
 };
 
 struct s_fork
@@ -99,10 +104,13 @@ struct s_philo
 
 // ##### FUNCTIONS #####
 
-// parse
+// parse & init
 void	ft_parse_input(t_monitor *monitor, int argc, char *argv[]);
+void	ft_init_structs(t_monitor *monitor);
 
 // utils
-void	ft_exit(char *msg);
+void	ft_exit(t_monitor *monitor, char *msg, bool destroy_locks);
+void	ft_free_monitor(t_monitor *monitor);
+void	ft_destroy_locks(t_monitor *monitor);
 
 #endif
