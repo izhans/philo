@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:36:18 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/06 09:02:07 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/06 09:52:07 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,18 @@
 # define MAX_INPUT_VALUE INT_MAX
 # define MIN_MS 60
 # define MAX_PHILOS 200
+# define TIME_STEP 1000
 
 // printf
 # define RESET "\033[0m"
 # define RED "\033[1;31m"
+
+// actions
+# define PHILO_TAKE_FORK "has taken a fork"
+# define PHILO_EAT "is eating"
+# define PHILO_SLEEP "is sleeping"
+# define PHILO_THINK "is thinking"
+# define PHILO_DIE "died"
 
 // error msgs
 # define INPUT_SIGNATURE "./philo number_of_philosophers time_to_die \
@@ -48,6 +56,7 @@ time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
 values with no more than 200 philos and no lower times than 60ms"
 # define MALLOC_ERROR "An error ocurred while allocating memory"
 # define MUTEX_INIT_ERROR "Error while initiating mutex"
+# define THREAD_INIT_ERROR "Error while creating thread"
 
 // ##### STRUCTS #####
 
@@ -60,24 +69,27 @@ typedef struct s_philo		t_philo;
 struct s_monitor
 {
 	// input data
-	int		n_philos;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		meals_limit; // [number_of_times_each_philosopher_must_eat]
+	int			n_philos;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	int			meals_limit; // [number_of_times_each_philosopher_must_eat]
 	// forks, philos & locks
-	t_fork	*forks;
-	t_philo	*philos;
-	t_lock	ready_lock;
-	t_lock	print_lock;
-	t_lock	end_lock;
+	t_fork		*forks;
+	t_philo		*philos;
+	t_lock		ready_lock;
+	t_lock		print_lock;
+	t_lock		end_lock;
 	// simulation data
-	bool	ready;
-	long	start_time;
-	bool	end; // true if philo dies or meals_limit is reached
+	bool		ready;
+	long		start_time;
+	bool		end; // true if philo dies or meals_limit is reached
 	// created data
-	int		created_forks;
-	int		created_philos;
+	int			created_forks;
+	int			created_philos;
+	int			created_threads;
+	// thread
+	pthread_t	thread;
 };
 
 struct s_fork
@@ -112,5 +124,6 @@ void	ft_init_structs(t_monitor *monitor);
 void	ft_exit(t_monitor *monitor, char *msg, bool destroy_locks);
 void	ft_free_monitor(t_monitor *monitor);
 void	ft_destroy_locks(t_monitor *monitor);
+void	ft_join_threads(t_monitor *monitor);
 
 #endif
