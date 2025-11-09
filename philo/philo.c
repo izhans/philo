@@ -6,14 +6,14 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:49:57 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 10:12:23 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 14:15:14 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 void	ft_one_philo_dinner(t_monitor *monitor);
-void	ft_create_threads(t_monitor *monitor);
+bool	ft_create_threads(t_monitor *monitor);
 void	*routine(void *data);
 void	*monitor_routine(void *data);
 
@@ -23,16 +23,21 @@ int	main(int argc, char *argv[])
 
 	memset(&monitor, 0, sizeof(t_monitor));
 	// 1. validate & parse input
-	ft_parse_input(&monitor, argc, argv);
+	if (!ft_parse_input(&monitor, argc, argv))
+		return (1);
 	// 2. init data
-	ft_init_structs(&monitor);
+	if (!ft_init_structs(&monitor))
+		return (1);
 	// 3. philos do things
 	// 3.1 one philo case -> let die and end simulation
 	if (monitor.n_philos == 1)
 		ft_one_philo_dinner(&monitor);
 	// 3.2 create threads
 	else
-		ft_create_threads(&monitor);
+	{
+		if (!ft_create_threads(&monitor))
+			return (1);
+	}
 	// 4. end -> wait threads and clean
 	ft_destroy_locks(&monitor);
 	ft_free_monitor(&monitor);
@@ -55,7 +60,7 @@ void	ft_one_philo_dinner(t_monitor *monitor)
 /**
  * @brief creates philos and monitor threads, starts dinner and waits till end
  */
-void	ft_create_threads(t_monitor *monitor)
+bool	ft_create_threads(t_monitor *monitor)
 {
 	int	i;
 
@@ -65,22 +70,26 @@ void	ft_create_threads(t_monitor *monitor)
 	{
 		if (pthread_create(&monitor->philos[i].thread, NULL,
 				routine, &monitor->philos[i]) != EXIT_SUCCESS)
-			ft_exit(monitor, THREAD_INIT_ERROR, true);
+			return (ft_exit(monitor, THREAD_INIT_ERROR, true, true));
 		monitor->created_threads++;
 		i++;
 	}
 	// create monitor thread
 	if (pthread_create(&monitor->thread, NULL,
 			monitor_routine, monitor) != EXIT_SUCCESS)
-		ft_exit(monitor, THREAD_INIT_ERROR, true);
+	{
+		ft_setbool(&monitor->end, true, &monitor->end_lock);
+		ft_setbool(&monitor->ready, true, &monitor->ready_lock);
+		return (ft_exit(monitor, THREAD_INIT_ERROR, true, true));
+	}
 	// set start time
 	monitor->start_time = ft_getms();
 	// set ready flag to true
 	ft_setbool(&monitor->ready, true, &monitor->ready_lock);
 	// join threads
-	// ? primero monitor o philos
 	ft_join_threads(monitor);
 	pthread_join(monitor->thread, NULL);
+	return (true);
 }
 
 /**
@@ -96,6 +105,8 @@ void	*routine(void *data)
 	// while !ready -> wait
 	while (!ft_getbool(&monitor->ready, &monitor->ready_lock))
 		usleep(CHECK_READY_ACTIVE_WAIT);
+	if (ft_end_dinner(monitor))
+		return (NULL);
 	// set last_meal to now
 	ft_setlong(&philo->last_meal, ft_getms(), &philo->meals_lock);
 	// think

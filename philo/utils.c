@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:13:58 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 09:20:05 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 14:19:43 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,16 @@
 /**
  * @brief exits with failure status, cleaning all and printing the given msg
  */
-void	ft_exit(t_monitor *monitor, char *msg, bool destroy_locks)
+bool	ft_exit(t_monitor *monitor, char *msg, bool destroy_locks,
+		bool join_threads)
 {
 	printf(RED "%s\n" RESET, msg);
 	if (destroy_locks)
 		ft_destroy_locks(monitor);
-	ft_join_threads(monitor);
+	if (join_threads)
+		ft_join_threads(monitor);
 	ft_free_monitor(monitor);
-	exit(EXIT_FAILURE);
+	return (false);
 }
 
 /**
@@ -31,7 +33,6 @@ void	ft_exit(t_monitor *monitor, char *msg, bool destroy_locks)
 void	ft_destroy_locks(t_monitor *monitor)
 {
 	int		i;
-	bool	clear_all;
 
 	i = 0;
 	while (i < monitor->created_forks)
@@ -39,12 +40,12 @@ void	ft_destroy_locks(t_monitor *monitor)
 		pthread_mutex_destroy(&monitor->forks[i].fork);
 		i++;
 	}
-	clear_all = monitor->created_forks == monitor->n_philos;
-	if (!clear_all)
-		return ;
-	pthread_mutex_destroy(&monitor->end_lock);
-	pthread_mutex_destroy(&monitor->ready_lock);
-	pthread_mutex_destroy(&monitor->print_lock);
+	if (monitor->created_end)
+		pthread_mutex_destroy(&monitor->end_lock);
+	if (monitor->created_ready)
+		pthread_mutex_destroy(&monitor->ready_lock);
+	if (monitor->created_print)
+		pthread_mutex_destroy(&monitor->print_lock);
 	i = 0;
 	while (i < monitor->created_philos)
 	{

@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:36:18 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 10:13:26 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 13:49:10 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@
 // error msgs
 # define INPUT_SIGNATURE "./philo number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
-# define INPUT_CONTAINS_INVALID_VALUES "Input must contain positive numeric (int)\
-values with no more than 200 philos and no lower times than 60ms"
+# define INPUT_CONTAINS_INVALID_VALUES "Input must contain positive numeric \
+(int) values with no more than 200 philos and no lower times than 60ms"
 # define MALLOC_ERROR "An error ocurred while allocating memory"
 # define MUTEX_INIT_ERROR "Error while initiating mutex"
 # define THREAD_INIT_ERROR "Error while creating thread"
@@ -93,6 +93,9 @@ struct s_monitor
 	int			created_forks;
 	int			created_philos;
 	int			created_threads;
+	bool		created_ready;
+	bool		created_end;
+	bool		created_print;
 	// thread
 	pthread_t	thread;
 };
@@ -124,8 +127,8 @@ struct s_philo
 // ##### FUNCTIONS #####
 
 // parse & init
-void	ft_parse_input(t_monitor *monitor, int argc, char *argv[]);
-void	ft_init_structs(t_monitor *monitor);
+bool	ft_parse_input(t_monitor *monitor, int argc, char *argv[]);
+bool	ft_init_structs(t_monitor *monitor);
 
 // philo actions
 bool	ft_eat(t_philo *philo);
@@ -137,7 +140,8 @@ bool	ft_meals_limit_reached(t_monitor *monitor);
 bool	ft_a_philo_died(t_monitor *monitor);
 
 // utils
-void	ft_exit(t_monitor *monitor, char *msg, bool destroy_locks);
+bool	ft_exit(t_monitor *monitor, char *msg, bool destroy_locks,
+			bool join_threads);
 void	ft_free_monitor(t_monitor *monitor);
 void	ft_destroy_locks(t_monitor *monitor);
 void	ft_join_threads(t_monitor *monitor);
