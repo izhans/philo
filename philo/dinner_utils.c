@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:46:35 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 09:23:06 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 18:47:52 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,19 @@
 /**
  * @brief checks if all the philos are full
  * @note philos are full if meals_limit has been reached on all of them
- * @returns true if there is a meal limit and all philos have reached it
+ * @returns true if all philos are full
  */
 bool	ft_meals_limit_reached(t_monitor *monitor)
 {
 	int		i;
-	long	meals_eaten;
 
 	i = 0;
 	if (monitor->meals_limit == 0)
 		return (false);
 	while (i < monitor->n_philos)
 	{
-		meals_eaten = ft_getlong(&monitor->philos[i].meals_eaten,
-				&monitor->philos[i].meals_lock);
-		if (meals_eaten < monitor->meals_limit)
+		if (!ft_getbool(&monitor->philos[i].full,
+				&monitor->philos[i].meals_lock))
 			return (false);
 		i++;
 	}
@@ -48,6 +46,12 @@ bool	ft_a_philo_died(t_monitor *monitor)
 	i = 0;
 	while (i < monitor->n_philos)
 	{
+		if (ft_getbool(&monitor->philos[i].eating,
+				&monitor->philos[i].meals_lock))
+		{
+			i++;
+			continue ;
+		}
 		last_meal = ft_getlong(&monitor->philos[i].last_meal,
 				&monitor->philos[i].meals_lock);
 		if (ft_getms() - last_meal > monitor->time_to_die)

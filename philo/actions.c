@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:46:37 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 12:31:37 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 18:45:57 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,18 @@ bool	ft_eat(t_philo *philo)
 		return (false);
 	}
 	// eat
-	ft_setlong(&philo->last_meal, ft_getms(), &philo->meals_lock);
+	ft_setbool(&philo->eating, true, &philo->meals_lock);
 	ft_print(philo, PHILO_EAT);
 	ft_usleep(philo->monitor, philo->monitor->time_to_eat);
 	// update vars
+	philo->meals_eaten++;
 	if (!ft_end_dinner(philo->monitor))
 	{
 		pthread_mutex_lock(&philo->meals_lock);
 		philo->last_meal = ft_getms();
-		philo->meals_eaten++;
-		// philo->full // ? tendria que cambiar ft_meals_limit_reached
+		philo->eating = false;
+		if (philo->meals_eaten == philo->monitor->meals_limit)
+			philo->full = true;
 		pthread_mutex_unlock(&philo->meals_lock);
 	}
 	// leave forks

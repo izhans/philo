@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:36:18 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 13:49:10 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 18:52:52 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ struct s_philo
 	long		last_meal; // timestamp when the philo had its last meal
 	long		meals_eaten; // for [number_of_times_each_philosopher_must_eat]
 	bool		full; // true when meals_eaten == meals_limit
+	bool		eating;
 	// monitor -> common data
 	t_monitor	*monitor;
 };
