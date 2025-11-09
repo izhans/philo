@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:36:18 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/06 18:31:55 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 09:27:09 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ struct s_philo
 	// forks
 	t_fork		*left_fork; // fork_id == id
 	t_fork		*right_fork; // fork_id == id + 1
+	t_fork		*first_fork; // evens L odds R
+	t_fork		*second_fork; // evens R odds L
 	// meals
 	t_lock		meals_lock;
 	long		last_meal; // timestamp when the philo had its last meal
@@ -125,6 +127,11 @@ struct s_philo
 void	ft_parse_input(t_monitor *monitor, int argc, char *argv[]);
 void	ft_init_structs(t_monitor *monitor);
 
+// philo actions
+bool	ft_eat(t_philo *philo);
+bool	ft_sleep(t_philo *philo);
+bool	ft_think(t_philo *philo);
+
 // dinner utils
 bool	ft_meals_limit_reached(t_monitor *monitor);
 bool	ft_a_philo_died(t_monitor *monitor);
@@ -137,7 +144,7 @@ void	ft_join_threads(t_monitor *monitor);
 void	ft_print(t_philo *philo, char *action);
 
 // time utils
-void	ft_usleep(int miliseconds);
+void	ft_usleep(t_monitor *monitor, int miliseconds);
 long	ft_elapsed_ms(long start);
 long	ft_getms(void);
 
@@ -146,5 +153,6 @@ bool	ft_getbool(bool *var, t_lock *lock);
 void	ft_setbool(bool *var, bool value, t_lock *lock);
 long	ft_getlong(long *var, t_lock *lock);
 void	ft_setlong(long *var, long value, t_lock *lock);
+bool	ft_end_dinner(t_monitor *monitor);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:49:57 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/06 18:31:33 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 09:25:02 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_one_philo_dinner(t_monitor *monitor)
 
 	philo_id = 1;
 	printf("%d %d %s\n", 0, philo_id, PHILO_TAKE_FORK);
-	ft_usleep(monitor->time_to_die);
+	ft_usleep(monitor, monitor->time_to_die);
 	printf("%d %d %s\n", monitor->time_to_die, philo_id, PHILO_DIE);
 }
 
@@ -83,6 +83,9 @@ void	ft_create_threads(t_monitor *monitor)
 	pthread_join(monitor->thread, NULL);
 }
 
+/**
+ * @brief while !end -> eat -> sleep -> think -> repeat
+ */
 void	*routine(void *data)
 {
 	t_philo		*philo;
@@ -97,10 +100,14 @@ void	*routine(void *data)
 	ft_setlong(&philo->last_meal, ft_getms(), &philo->meals_lock);
 	// think
 	ft_print(philo, PHILO_THINK);
+	// ? delay
+	if (philo->id % 2 == 0)
+		ft_usleep(monitor, monitor->time_to_eat / 2); // TODO elegir un tiempo en caso de que time_to_eat sea muy grande
 	// while !end -> eat -> sleep -> think -> repeat
-	while (!ft_getbool(&monitor->end, &monitor->end_lock))
+	while (!ft_end_dinner(monitor))
 	{
-		// TODO eat -> sleep -> think -> repeat
+		if (!ft_eat(philo) || !ft_sleep(philo) || !ft_think(philo))
+			break ;
 	}
 	return (NULL);
 }

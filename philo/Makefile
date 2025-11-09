@@ -4,6 +4,7 @@ CC =	cc
 FLAGS =	-Wall -Werror -Wextra -pthread -g3
 
 SRC =	\
+		actions.c \
 		dinner_utils.c \
 		getters_setters.c \
 		init.c \

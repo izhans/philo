@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 09:39:49 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/06 14:00:19 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/07 11:15:39 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,17 @@
 /**
  * @brief sleeps in milis
  */
-void	ft_usleep(int miliseconds)
+void	ft_usleep(t_monitor *monitor, int miliseconds)
 {
 	long	start;
 
 	start = ft_getms();
 	while (ft_elapsed_ms(start) < miliseconds)
+	{
+		if (ft_end_dinner(monitor))
+			break ;
 		usleep(SLEEP_STEP);
+	}
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:21:44 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/06 09:04:39 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/07 13:44:48 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	*ft_malloc(t_monitor *monitor, size_t size);
 static void	ft_init_locks(t_monitor *monitor);
 static void	ft_init_philos(t_monitor *monitor);
+static void	ft_assign_forks(t_philo *philo, int id); 
 
 /**
  * @brief creates the forks and philos
@@ -89,9 +90,24 @@ static void	ft_init_philos(t_monitor *monitor)
 		philo->last_meal = 0;
 		philo->left_fork = &monitor->forks[i];
 		philo->right_fork = &monitor->forks[(i +1) % monitor->n_philos];
+		ft_assign_forks(philo, i);
 		if (pthread_mutex_init(&philo->meals_lock, NULL) != EXIT_SUCCESS)
 			ft_exit(monitor, MUTEX_INIT_ERROR, true);
 		monitor->created_philos++;
 		i++;
+	}
+}
+
+static void	ft_assign_forks(t_philo *philo, int id)
+{
+	if (id % 2 == 0)
+	{
+		philo->first_fork = philo->left_fork;
+		philo->second_fork = philo->right_fork;
+	}
+	else
+	{
+		philo->first_fork = philo->right_fork;
+		philo->second_fork = philo->left_fork;
 	}
 }

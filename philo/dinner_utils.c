@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:46:35 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/06 18:33:14 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 09:23:06 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	ft_meals_limit_reached(t_monitor *monitor)
 
 /**
  * @brief checks if any philo has died
- * @note a philo is dead if now - last_meal >= time_to_die
+ * @note a philo is dead if now - last_meal > time_to_die
  */
 bool	ft_a_philo_died(t_monitor *monitor)
 {
@@ -50,7 +50,7 @@ bool	ft_a_philo_died(t_monitor *monitor)
 	{
 		last_meal = ft_getlong(&monitor->philos[i].last_meal,
 				&monitor->philos[i].meals_lock);
-		if (ft_getms() - last_meal >= monitor->time_to_die)
+		if (ft_getms() - last_meal > monitor->time_to_die)
 		{
 			ft_print(&monitor->philos[i], PHILO_DIE);
 			return (true);

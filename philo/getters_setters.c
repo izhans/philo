@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 13:48:51 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/06 14:02:30 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/06 18:48:10 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,9 @@ void	ft_setlong(long *var, long value, t_lock *lock)
 	pthread_mutex_lock(lock);
 	*var = value;
 	pthread_mutex_unlock(lock);
+}
+
+bool	ft_end_dinner(t_monitor *monitor)
+{
+	return (ft_getbool(&monitor->end, &monitor->end_lock));
 }
