@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:36:18 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 18:52:52 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 23:40:24 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define SLEEP_STEP 500
 # define CHECK_READY_ACTIVE_WAIT 100
 # define CHECK_END_ACTIVE_WAIT 1000
-# define MONITOR_THREAD_DELAY 500
+# define MONITOR_THREAD_DELAY 30e3 // e3 = *1000 -> to milliseconds
 
 // printf
 # define RESET "\033[0m"

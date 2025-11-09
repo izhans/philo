@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:49:57 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 19:15:31 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 23:28:38 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,5 @@ void	*monitor_routine(void *data)
 			break ;
 		usleep(CHECK_END_ACTIVE_WAIT);
 	}
-	ft_setbool(&monitor->end, true, &monitor->end_lock);
 	return (NULL);
 }

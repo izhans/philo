@@ -6,11 +6,13 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:46:35 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 18:47:52 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 23:27:57 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	ft_philo_dead(t_monitor *monitor, t_philo *philo);
 
 /**
  * @brief checks if all the philos are full
@@ -31,6 +33,7 @@ bool	ft_meals_limit_reached(t_monitor *monitor)
 			return (false);
 		i++;
 	}
+	ft_setbool(&monitor->end, true, &monitor->end_lock);
 	return (true);
 }
 
@@ -56,10 +59,19 @@ bool	ft_a_philo_died(t_monitor *monitor)
 				&monitor->philos[i].meals_lock);
 		if (ft_getms() - last_meal > monitor->time_to_die)
 		{
-			ft_print(&monitor->philos[i], PHILO_DIE);
+			ft_philo_dead(monitor, &monitor->philos[i]);
 			return (true);
 		}
 		i++;
 	}
 	return (false);
+}
+
+static void	ft_philo_dead(t_monitor *monitor, t_philo *philo)
+{
+	pthread_mutex_lock(&monitor->print_lock);
+	ft_setbool(&monitor->end, true, &monitor->end_lock);
+	printf("%ld %d %s\n", ft_elapsed_ms(monitor->start_time),
+		philo->id +1, PHILO_DIE);
+	pthread_mutex_unlock(&monitor->print_lock);
 }
