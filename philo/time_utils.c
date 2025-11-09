@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 09:39:49 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 11:49:49 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 19:09:32 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,5 @@ void	ft_delay(t_philo *philo)
 	if (philo->id % 2 == 1)
 		ft_usleep(monitor, time_to_eat / 3);
 	else
-		ft_usleep(monitor, time_to_eat * 2/3);
+		ft_usleep(monitor, time_to_eat * 2 / 3);
 }

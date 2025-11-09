@@ -1,0 +1,88 @@
+# ./philo n_philos time_to_die time_to_eat time_to_sleep [times_must_eat]
+- []
+./philo 1 800 200 200
+the philo should die at 800
+
+- []
+./philo 3 310 103 103
+no one should die (precise)
+
+- []
+./philo 2 130 60 60
+no one should die (precise)
+
+- []
+./philo 4 310 200 100
+no philo should die
+
+- []
+./philo 4 200 205 200
+a philo should die at 200
+
+- []
+./philo 4 200 210 200
+a philo should die at 200
+
+- []
+./philo 4 200 820 200
+a philo should die at 200
+
+- []
+./philo 5 800 200 200 7
+no one should die, simulation should stop after 7 eats
+
+- []
+./philo 4 410 200 200 10
+no one should die, simulation should stop after 10 eats
+
+- []
+./philo 5 600 200 200
+no one should die
+
+- []
+./philo -5 600 200 200
+should error and not run (no crashing)
+
+- []
+./philo 4 -5 200 200
+should error and not run (no crashing)
+
+- []
+./philo 4 600 -5 200
+should error and not run (no crashing)
+
+- []
+./philo 4 600 200 -5
+should error and not run (no crashing)
+
+- []
+./philo 4 600 200 200 -5
+should error and not run (no crashing)
+
+- []
+./philo 5 800 200 200
+no one should die
+
+- []
+./philo 5 600 150 150
+no one should die
+
+- []
+./philo 4 410 200 200
+no one should die
+
+- []
+./philo 100 800 200 200
+no one should die
+
+- []
+./philo 105 800 200 200
+no one should die
+
+- []
+./philo 200 800 200 200
+no one should die
+
+- []
+./philo 2 100 300 60
+first philo should no die WHILE eating (but the second should) -> exec multiple times

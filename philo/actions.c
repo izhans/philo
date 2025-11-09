@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:46:37 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 18:45:57 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 19:08:02 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 static bool	ft_take_fork(t_philo *philo, t_fork *fork);
 
+/**
+ * @brief takes forks, eats, updates vars and leave forks,
+ * all while checking dinner hasn't come to an end
+ */
 bool	ft_eat(t_philo *philo)
 {
-	// take 1st fork
 	if (!ft_take_fork(philo, philo->first_fork))
 		return (false);
-	// take 2nd fork
 	if (!ft_take_fork(philo, philo->second_fork))
 	{
 		pthread_mutex_unlock(&philo->first_fork->fork);
 		return (false);
 	}
-	// eat
 	ft_setbool(&philo->eating, true, &philo->meals_lock);
 	ft_print(philo, PHILO_EAT);
 	ft_usleep(philo->monitor, philo->monitor->time_to_eat);
-	// update vars
 	philo->meals_eaten++;
 	if (!ft_end_dinner(philo->monitor))
 	{
@@ -40,7 +40,6 @@ bool	ft_eat(t_philo *philo)
 			philo->full = true;
 		pthread_mutex_unlock(&philo->meals_lock);
 	}
-	// leave forks
 	pthread_mutex_unlock(&philo->first_fork->fork);
 	pthread_mutex_unlock(&philo->second_fork->fork);
 	return (true);
@@ -71,8 +70,6 @@ static bool	ft_take_fork(t_philo *philo, t_fork *fork)
 {
 	if (ft_end_dinner(philo->monitor))
 		return (false);
-
-	// take fork
 	pthread_mutex_lock(&fork->fork);
 	if (ft_end_dinner(philo->monitor))
 	{

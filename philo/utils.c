@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:13:58 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 14:19:43 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 19:06:15 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ void	ft_print(t_philo *philo, char *action)
 	pthread_mutex_lock(&monitor->print_lock);
 	timestamp = ft_elapsed_ms(monitor->start_time);
 	if (!ft_end_dinner(monitor))
-		printf("%ld %d %s\n", timestamp, philo->id, action); // TODO id+1
+		printf("%ld %d %s\n", timestamp, philo->id +1, action);
 	pthread_mutex_unlock(&monitor->print_lock);
 }
