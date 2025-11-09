@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 09:39:49 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/07 11:15:39 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 11:49:49 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,30 @@ long	ft_getms(void)
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * TIME_STEP + tv.tv_usec / TIME_STEP);
+}
+
+/**
+ * @brief applies fairness to philos by delaying them at the beggining
+ * 		if n_philos is even, they take 2 turns (evens -> odds)
+ * 		if n_philos is odd, they take 3 turns (1st -> odds -> evens)
+ */
+void	ft_delay(t_philo *philo)
+{
+	t_monitor	*monitor;
+	int			time_to_eat;
+
+	monitor = philo->monitor;
+	time_to_eat = monitor->time_to_eat;
+	if (monitor->n_philos % 2 == 0)
+	{
+		if (philo->id % 2 == 1)
+			ft_usleep(monitor, time_to_eat / 2);
+		return ;
+	}
+	if (philo->id == 0)
+		return ;
+	if (philo->id % 2 == 1)
+		ft_usleep(monitor, time_to_eat / 3);
+	else
+		ft_usleep(monitor, time_to_eat * 2/3);
 }

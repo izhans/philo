@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:36:18 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 09:27:09 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/09 10:13:26 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void	ft_print(t_philo *philo, char *action);
 void	ft_usleep(t_monitor *monitor, int miliseconds);
 long	ft_elapsed_ms(long start);
 long	ft_getms(void);
+void	ft_delay(t_philo *philo);
 
 // getters & setters
 bool	ft_getbool(bool *var, t_lock *lock);
