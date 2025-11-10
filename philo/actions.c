@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:46:37 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/10 18:41:42 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/10 20:38:34 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ bool	ft_think(t_philo *philo)
 	if (ft_end_dinner(philo->monitor))
 		return (false);
 	ft_print(philo, PHILO_THINK);
+	if (philo->monitor->n_philos % 2 == 1)
+		ft_usleep(philo->monitor, philo->monitor->time_to_sleep / 2);
 	return (true);
 }
 
