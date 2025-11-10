@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:13:58 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 19:06:15 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/10 18:35:13 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_destroy_locks(t_monitor *monitor)
 	i = 0;
 	while (i < monitor->created_forks)
 	{
-		pthread_mutex_destroy(&monitor->forks[i].fork);
+		pthread_mutex_destroy(&monitor->forks[i]);
 		i++;
 	}
 	if (monitor->created_end)

@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:46:37 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/10 18:30:25 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/10 18:41:42 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	ft_eat(t_philo *philo)
 		return (false);
 	if (!ft_take_fork(philo, philo->second_fork))
 	{
-		pthread_mutex_unlock(&philo->first_fork->fork);
+		pthread_mutex_unlock(philo->first_fork);
 		return (false);
 	}
 	ft_setlong(&philo->last_meal, ft_getms(), &philo->meals_lock);
@@ -33,8 +33,8 @@ bool	ft_eat(t_philo *philo)
 	philo->meals_eaten++;
 	if (philo->meals_eaten == philo->monitor->meals_limit)
 		ft_setbool(&philo->full, true, &philo->meals_lock);
-	pthread_mutex_unlock(&philo->first_fork->fork);
-	pthread_mutex_unlock(&philo->second_fork->fork);
+	pthread_mutex_unlock(philo->first_fork);
+	pthread_mutex_unlock(philo->second_fork);
 	return (true);
 }
 
@@ -63,10 +63,10 @@ static bool	ft_take_fork(t_philo *philo, t_fork *fork)
 {
 	if (ft_end_dinner(philo->monitor))
 		return (false);
-	pthread_mutex_lock(&fork->fork);
+	pthread_mutex_lock(fork);
 	if (ft_end_dinner(philo->monitor))
 	{
-		pthread_mutex_unlock(&fork->fork);
+		pthread_mutex_unlock(fork);
 		return (false);
 	}
 	ft_print(philo, PHILO_TAKE_FORK);

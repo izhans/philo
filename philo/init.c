@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:21:44 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 13:44:43 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/10 18:37:53 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ static bool	ft_init_locks(t_monitor *monitor)
 		return (ft_exit(monitor, MUTEX_INIT_ERROR, true, false));
 	while (i < monitor->n_philos)
 	{
-		monitor->forks[i].id = i;
-		if (pthread_mutex_init(&monitor->forks[i].fork, NULL) != EXIT_SUCCESS)
+		if (pthread_mutex_init(&monitor->forks[i], NULL) != EXIT_SUCCESS)
 			return (ft_exit(monitor, MUTEX_INIT_ERROR, true, false));
 		monitor->created_forks++;
 		i++;

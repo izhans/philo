@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:36:18 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/10 18:09:20 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/10 18:34:53 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
 typedef pthread_mutex_t		t_lock;
 typedef struct timeval		t_tv;
 typedef struct s_monitor	t_monitor;
-typedef struct s_fork		t_fork;
+typedef t_lock				t_fork;
 typedef struct s_philo		t_philo;
 
 struct s_monitor
@@ -98,12 +98,6 @@ struct s_monitor
 	bool		created_print;
 	// thread
 	pthread_t	thread;
-};
-
-struct s_fork
-{
-	int		id;
-	t_lock	fork;
 };
 
 struct s_philo
