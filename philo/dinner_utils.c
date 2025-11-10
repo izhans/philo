@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:46:35 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 23:27:57 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/10 14:06:49 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,6 @@ bool	ft_a_philo_died(t_monitor *monitor)
 	i = 0;
 	while (i < monitor->n_philos)
 	{
-		if (ft_getbool(&monitor->philos[i].eating,
-				&monitor->philos[i].meals_lock))
-		{
-			i++;
-			continue ;
-		}
 		last_meal = ft_getlong(&monitor->philos[i].last_meal,
 				&monitor->philos[i].meals_lock);
 		if (ft_getms() - last_meal > monitor->time_to_die)

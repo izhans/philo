@@ -6,7 +6,7 @@
 /*   By: isastre- <isastre-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 13:46:37 by isastre-          #+#    #+#             */
-/*   Updated: 2025/11/09 19:08:02 by isastre-         ###   ########.fr       */
+/*   Updated: 2025/11/10 18:30:25 by isastre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,12 @@ bool	ft_eat(t_philo *philo)
 		pthread_mutex_unlock(&philo->first_fork->fork);
 		return (false);
 	}
-	ft_setbool(&philo->eating, true, &philo->meals_lock);
+	ft_setlong(&philo->last_meal, ft_getms(), &philo->meals_lock);
 	ft_print(philo, PHILO_EAT);
 	ft_usleep(philo->monitor, philo->monitor->time_to_eat);
 	philo->meals_eaten++;
-	if (!ft_end_dinner(philo->monitor))
-	{
-		pthread_mutex_lock(&philo->meals_lock);
-		philo->last_meal = ft_getms();
-		philo->eating = false;
-		if (philo->meals_eaten == philo->monitor->meals_limit)
-			philo->full = true;
-		pthread_mutex_unlock(&philo->meals_lock);
-	}
+	if (philo->meals_eaten == philo->monitor->meals_limit)
+		ft_setbool(&philo->full, true, &philo->meals_lock);
 	pthread_mutex_unlock(&philo->first_fork->fork);
 	pthread_mutex_unlock(&philo->second_fork->fork);
 	return (true);
